@@ -56,6 +56,7 @@ private:
     bool outOfScene = false;
     int move = 0;
     int cont = 1;
+    int t_move = 60;
 
 signals:
     void outScene();

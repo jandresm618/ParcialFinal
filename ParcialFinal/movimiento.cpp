@@ -137,3 +137,18 @@ void Movimiento::setLanzamiento(int _v0, int _angle)
     angulo = _angle;
     actualizar(DT);
 }
+
+float Movimiento::getX() const
+{
+    return x;
+}
+
+float Movimiento::getY() const
+{
+    return y;
+}
+
+bool Movimiento::getLado() const
+{
+    return lado;
+}

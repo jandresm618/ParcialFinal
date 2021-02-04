@@ -4,6 +4,7 @@
 #include <math.h>
 #include <vector>
 #include <map>
+#include <QDebug>
 
 #define G 9.81
 #define pi 3.141617
@@ -32,6 +33,12 @@ public:
     void imprimirValoresImpacto();
 
     void setLanzamiento(int _v0,int _angle);
+
+    float getX() const;
+
+    float getY() const;
+
+    bool getLado() const;
 
 private:
     bool lado; //Indicador de bando

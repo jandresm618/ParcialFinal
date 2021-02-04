@@ -3,7 +3,6 @@
 
 #include <QGraphicsScene>
 #include <QPushButton>
-#include <QGraphicsSceneMouseEvent>
 #include "objeto_grafico.h"
 #include "objeto_movil.h"
 
@@ -40,8 +39,8 @@ public:
 
 private:
     /// APUNTADOR A OBJETOS GRAFICOS
-    Objeto_Grafico *torres;
-    Objeto_Movil *proyectiles;
+    Objeto_Grafico *canon;
+    Objeto_Movil *proyectil;
 
         /// CONTENEDORES DE OBJETOS
     vector<Objeto_Grafico *> objetosGraficos;
