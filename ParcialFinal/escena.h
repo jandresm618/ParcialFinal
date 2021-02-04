@@ -1,5 +1,5 @@
-#ifndef ESCENA_JUEGO_H
-#define ESCENA_JUEGO_H
+#ifndef ESCENA_H
+#define ESCENA_H
 
 #include <QGraphicsScene>
 #include <QPushButton>
@@ -7,13 +7,13 @@
 #include "objeto_movil.h"
 
 
-class Escena_Juego : public QGraphicsScene
+class Escena : public QGraphicsScene
 {
 
 public:    
         /// CONSTRUCTOR Y DESTRUCTOR
-    Escena_Juego();
-    ~Escena_Juego();
+    Escena();
+    ~Escena();
 
 
         /// CARACTERISTICAS DE ESCRITORIO
@@ -23,7 +23,7 @@ public:
         /// FUNCIONES AÑADIR OBJETOS GRAFICOS
     void addObjetoGrafico(QString ruta,int x,int y,int w,int h);
     void addObjetoMovil(QString ruta,int x,int y,int xf,int yf,int w,int h,int move);
-    void addObjetoMovil(QString ruta,int x,int y,int v0,int angle,int move);
+    void addObjetoMovil(QString ruta, int x, int y, int v0, int angle, bool lado);
     void explodeObject(int _x,int _y,int _w,int _h);
 
 
@@ -56,4 +56,4 @@ private:
     int time_move = 60;
 };
 
-#endif // ESCENA_JUEGO_H
+#endif // ESCENA_H

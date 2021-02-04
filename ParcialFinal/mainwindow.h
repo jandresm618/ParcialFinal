@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
+#include <QDesktopWidget>
+#include <QPushButton>
 #include "escena.h"
 
 QT_BEGIN_NAMESPACE
@@ -18,15 +20,20 @@ public:
     ~MainWindow();
 
         /// CARACTERISTICAS DE PANTALLA
-    void setDeskProperty(int w,int h);
+    void setDeskProperty();
 
     void crearObjetos();
+
+    void addProyectilSimple(QString ruta,int x,int y,int tMove);
 
 private:
     Ui::MainWindow *ui;
 
+    QDesktopWidget *deskWidget;
     Escena* scene;
     QGraphicsView *view;
+
+    QPushButton *boton;
 
         /// MEDIDAS DE ESCRITORIO
     int desk_widht,desk_height;

@@ -19,8 +19,8 @@ Objeto_Movil::Objeto_Movil(QString _ruta, int _x, int _y, int _w, int _h): Objet
 {
     movimiento = new Movimiento;
     time_move = new QTimer;
-    connect(time_move,&QTimer::timeout,this,&Objeto_Movil::changeSize);
-    time_move->start(250);
+    connect(time_move,&QTimer::timeout,this,&Objeto_Movil::updatePos);
+    time_move->start(t_move);
 }
 
 Objeto_Movil::~Objeto_Movil()

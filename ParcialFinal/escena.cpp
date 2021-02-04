@@ -1,14 +1,14 @@
 #include "escena.h"
 
 ///         CONSTRUCTOR         ///
-Escena_Juego::Escena_Juego()
+Escena::Escena()
 {
     //image = new QPixmap(":/personajes/imagenes/Fondo_Original1.png");
     image = new QPixmap(":/personajes/imagenes/fondo.png");
 }
 
 ///         DESTRUCTOR         ///
-Escena_Juego::~Escena_Juego()
+Escena::~Escena()
 {
     ///ELIMINACION DE MEMORIA
     delete proyectil;
@@ -17,21 +17,21 @@ Escena_Juego::~Escena_Juego()
 
 
 ///         PROPIEDADES DE VENTANA         ///
-void Escena_Juego::setWindowProperty(int desk_w, int desk_h)
+void Escena::setWindowProperty(int desk_w, int desk_h)
 {
     limit_x = desk_w;
     limit_y = desk_h;
     setSceneRect(0,0,desk_w,desk_h);
 }
 
-void Escena_Juego::drawBackground(QPainter *painter, const QRectF &exposed)
+void Escena::drawBackground(QPainter *painter, const QRectF &exposed)
 {
     painter->drawPixmap(QRectF(0,0,limit_x,limit_y),*image,image->rect());
 }
 
 
 ///         AÑADIR OBJETOS GRAFICOS         ///
-void Escena_Juego::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
+void Escena::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
 {
     ///DECLARACION DE OBJETO
     canon = new Objeto_Grafico(ruta,x,y,w,h);
@@ -41,7 +41,7 @@ void Escena_Juego::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
 }
 
 ///         AÑADIR OBJETOS GRAFICOS MOVILES         ///
-void Escena_Juego::addObjetoMovil(QString ruta, int x, int y,int xf,int yf, int w, int h, int move)
+void Escena::addObjetoMovil(QString ruta, int x, int y,int xf,int yf, int w, int h, int move)
 {
     ///DECLARACION DE VARIABLES AUXILIARES LOCALES
     int param = 5;              //Parametro Altura Maxima
@@ -64,10 +64,10 @@ void Escena_Juego::addObjetoMovil(QString ruta, int x, int y,int xf,int yf, int 
     proyectil->startMove(time_move);                //Asigna valor de timeout para el movimiento
 }
 
-void Escena_Juego::addObjetoMovil(QString ruta, int x, int y, int v0, int angle, int move)
+void Escena::addObjetoMovil(QString ruta, int x, int y, int v0, int angle, bool lado)
 {
     ///CREACION DE OBJETO MOVIL
-    proyectil = new Objeto_Movil(ruta,x,y,0,500,100,100,move);
+    proyectil = new Objeto_Movil(ruta,x,y,100,100);
     objetosMoviles.push_back(proyectil);     //Añadir objeto a la lista de objetos moviles
     proyectil->setVel(v0,angle);
 
@@ -75,13 +75,13 @@ void Escena_Juego::addObjetoMovil(QString ruta, int x, int y, int v0, int angle,
     this->addItem(proyectil);                //Se añade el objeto a la escena
 }
 
-void Escena_Juego::explodeObject(int _x, int _y, int _w, int _h)
+void Escena::explodeObject(int _x, int _y, int _w, int _h)
 {
     proyectil = new Objeto_Movil(":/personajes/imagenes/explode.png",_x,_y,_w,_h);
 }
 
 
-void Escena_Juego::pause()
+void Escena::pause()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -90,7 +90,7 @@ void Escena_Juego::pause()
     }
 }
 
-void Escena_Juego::start()
+void Escena::start()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -99,7 +99,7 @@ void Escena_Juego::start()
     }
 }
 
-void Escena_Juego::restart()
+void Escena::restart()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -112,7 +112,7 @@ void Escena_Juego::restart()
 
 
 ///         ELIMINA LOS OBJETOS QUE ESTEN FUERA DE ESCENA´         ///
-bool Escena_Juego::deleteFromScene()
+bool Escena::deleteFromScene()
 {
     //cont_1++;
     bool collides = false;
