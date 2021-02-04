@@ -9,7 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    escena.cpp \
+    escena_guerra.cpp \
     main.cpp \
     mainwindow.cpp \
     movimiento.cpp \
@@ -17,7 +17,7 @@ SOURCES += \
     objeto_movil.cpp
 
 HEADERS += \
-    escena.h \
+    escena_guerra.h \
     mainwindow.h \
     movimiento.h \
     objeto_grafico.h \

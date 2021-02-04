@@ -5,7 +5,8 @@
 #include <QGraphicsView>
 #include <QDesktopWidget>
 #include <QPushButton>
-#include "escena.h"
+#include "escena_guerra.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,15 +25,14 @@ public:
 
     void crearObjetos();
 
-    void addProyectilSimple(QString ruta,int x,int y,int tMove);
+    void addProyectilSimple();
 
 private:
     Ui::MainWindow *ui;
 
-    QDesktopWidget *deskWidget;
-    Escena* scene;
+    QDesktopWidget *deskWidget;    
     QGraphicsView *view;
-
+    Escena_Guerra *scene;
     QPushButton *boton;
 
         /// MEDIDAS DE ESCRITORIO

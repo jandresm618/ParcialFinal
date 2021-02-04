@@ -1,37 +1,35 @@
-#include "escena.h"
+#include "escena_guerra.h"
 
 ///         CONSTRUCTOR         ///
-Escena::Escena()
+Escena_Guerra::Escena_Guerra()
 {
     //image = new QPixmap(":/personajes/imagenes/Fondo_Original1.png");
-    image = new QPixmap(":/personajes/imagenes/fondo.png");
-}
+    //image = new QPixmap(":/personajes/imagenes/fondo.png");
 
+}
 ///         DESTRUCTOR         ///
-Escena::~Escena()
+Escena_Guerra::~Escena_Guerra()
 {
     ///ELIMINACION DE MEMORIA
     delete proyectil;
     delete canon;
 }
-
-
 ///         PROPIEDADES DE VENTANA         ///
-void Escena::setWindowProperty(int desk_w, int desk_h)
+void Escena_Guerra::setWindowProperty(int desk_w, int desk_h)
 {
     limit_x = desk_w;
     limit_y = desk_h;
     setSceneRect(0,0,desk_w,desk_h);
 }
 
-void Escena::drawBackground(QPainter *painter, const QRectF &exposed)
+void Escena_Guerra::drawBackground(QPainter *painter, const QRectF &exposed)
 {
+
     painter->drawPixmap(QRectF(0,0,limit_x,limit_y),*image,image->rect());
 }
 
-
 ///         AÑADIR OBJETOS GRAFICOS         ///
-void Escena::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
+void Escena_Guerra::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
 {
     ///DECLARACION DE OBJETO
     canon = new Objeto_Grafico(ruta,x,y,w,h);
@@ -40,8 +38,7 @@ void Escena::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
     objetosGraficos.push_back(canon);
 }
 
-///         AÑADIR OBJETOS GRAFICOS MOVILES         ///
-void Escena::addObjetoMovil(QString ruta, int x, int y,int xf,int yf, int w, int h, int move)
+void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int xf, int yf, int w, int h, int move)
 {
     ///DECLARACION DE VARIABLES AUXILIARES LOCALES
     int param = 5;              //Parametro Altura Maxima
@@ -64,7 +61,7 @@ void Escena::addObjetoMovil(QString ruta, int x, int y,int xf,int yf, int w, int
     proyectil->startMove(time_move);                //Asigna valor de timeout para el movimiento
 }
 
-void Escena::addObjetoMovil(QString ruta, int x, int y, int v0, int angle, bool lado)
+void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int v0, int angle, bool lado)
 {
     ///CREACION DE OBJETO MOVIL
     proyectil = new Objeto_Movil(ruta,x,y,100,100);
@@ -75,13 +72,12 @@ void Escena::addObjetoMovil(QString ruta, int x, int y, int v0, int angle, bool 
     this->addItem(proyectil);                //Se añade el objeto a la escena
 }
 
-void Escena::explodeObject(int _x, int _y, int _w, int _h)
+void Escena_Guerra::explodeObject(int _x, int _y, int _w, int _h)
 {
     proyectil = new Objeto_Movil(":/personajes/imagenes/explode.png",_x,_y,_w,_h);
 }
 
-
-void Escena::pause()
+void Escena_Guerra::pause()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -90,7 +86,7 @@ void Escena::pause()
     }
 }
 
-void Escena::start()
+void Escena_Guerra::start()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -99,7 +95,7 @@ void Escena::start()
     }
 }
 
-void Escena::restart()
+void Escena_Guerra::restart()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -109,10 +105,7 @@ void Escena::restart()
     }
 }
 
-
-
-///         ELIMINA LOS OBJETOS QUE ESTEN FUERA DE ESCENA´         ///
-bool Escena::deleteFromScene()
+bool Escena_Guerra::deleteFromScene()
 {
     //cont_1++;
     bool collides = false;
@@ -134,7 +127,7 @@ bool Escena::deleteFromScene()
             else{
                 for (itObjMov2 = objetosMoviles.begin(),cont2=0;itObjMov2 != objetosMoviles.end();itObjMov2++,cont2++) {
                     /// Si es bala ///              ///Si es Enemigo///
-                    if((*itObjMov)->getLado() && !(*itObjMov2)->getLado()){                        
+                    if((*itObjMov)->getLado() && !(*itObjMov2)->getLado()){
                         if((*itObjMov)->collidesWithItem((*itObjMov2))
                                 && ((*itObjMov2)->collidesWithItem((*itObjMov)))
                                 /*|| (*itObjMov)->closeness((*itObjMov2),10)*/){
@@ -154,6 +147,4 @@ bool Escena::deleteFromScene()
         }
     }
     return collides;
-
 }
-

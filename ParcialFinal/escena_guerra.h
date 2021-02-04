@@ -1,20 +1,17 @@
-#ifndef ESCENA_H
-#define ESCENA_H
+#ifndef ESCENA_GUERRA_H
+#define ESCENA_GUERRA_H
 
 #include <QGraphicsScene>
 #include <QPushButton>
 #include "objeto_grafico.h"
 #include "objeto_movil.h"
 
-
-class Escena : public QGraphicsScene
+class Escena_Guerra : public QGraphicsScene
 {
-
-public:    
+public:
         /// CONSTRUCTOR Y DESTRUCTOR
-    Escena();
-    ~Escena();
-
+    Escena_Guerra();
+    ~Escena_Guerra();
 
         /// CARACTERISTICAS DE ESCRITORIO
     void setWindowProperty(int desk_w, int desk_h);
@@ -35,8 +32,6 @@ public:
         /// CONTROL DE COLISIONES Y PUESTAS EN ESCENA
     bool deleteFromScene();
 
-
-
 private:
     /// APUNTADOR A OBJETOS GRAFICOS
     Objeto_Grafico *canon;
@@ -56,4 +51,4 @@ private:
     int time_move = 60;
 };
 
-#endif // ESCENA_H
+#endif // ESCENA_GUERRA_H

@@ -7,9 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    qDebug()<<"Creando Objetos";
     crearObjetos();
-
-    connect(boton,&QPushButton::clicked,this,&MainWindow::addProyectilSimple);
+    qDebug()<<"Conectando";
+    //connect(boton,&QPushButton::clicked,this,&MainWindow::addProyectilSimple);
 }
 
 MainWindow::~MainWindow()
@@ -28,18 +29,21 @@ void MainWindow::setDeskProperty()
 
 void MainWindow::crearObjetos()
 {
-    scene = Escena;
+    scene = new Escena_Guerra;
     view = new QGraphicsView(scene,this);
     deskWidget = new QDesktopWidget;
     setDeskProperty();
-    boton = new QPushButton;
+    boton = new QPushButton("AÑADIR MISIL");
+    //boton->setGeometry(400,100,100,100);
+    //scene->addWidget(boton);
 
 }
 
-void MainWindow::addProyectilSimple(QString ruta, int x, int y, int tMove)
+
+void MainWindow::addProyectilSimple()
 {
     QString _ruta = ":/imagenes/Imagenes/Bomba.png";
     int _x = 100, _y=500;
-    scene->addObjetoMovil(ruta,_x,_y,50,30,false);
+    scene->addObjetoMovil(_ruta,_x,_y,50,30,false);
 }
 
