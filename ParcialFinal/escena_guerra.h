@@ -15,7 +15,7 @@ public:
 
         /// CARACTERISTICAS DE ESCRITORIO
     void setWindowProperty(int desk_w, int desk_h);
-    virtual void drawBackground(QPainter *painter, const QRectF &exposed);
+    //virtual void drawBackground(QPainter *painter, const QRectF &exposed);
 
         /// FUNCIONES AÑADIR OBJETOS GRAFICOS
     void addObjetoGrafico(QString ruta,int x,int y,int w,int h);

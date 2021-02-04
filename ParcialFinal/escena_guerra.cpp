@@ -21,12 +21,12 @@ void Escena_Guerra::setWindowProperty(int desk_w, int desk_h)
     limit_y = desk_h;
     setSceneRect(0,0,desk_w,desk_h);
 }
-
+/*
 void Escena_Guerra::drawBackground(QPainter *painter, const QRectF &exposed)
 {
 
     painter->drawPixmap(QRectF(0,0,limit_x,limit_y),*image,image->rect());
-}
+}*/
 
 ///         AÑADIR OBJETOS GRAFICOS         ///
 void Escena_Guerra::addObjetoGrafico(QString ruta, int x, int y, int w, int h)

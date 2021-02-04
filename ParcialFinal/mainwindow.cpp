@@ -7,10 +7,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    qDebug()<<"Creando Objetos";
+
     crearObjetos();
-    qDebug()<<"Conectando";
-    //connect(boton,&QPushButton::clicked,this,&MainWindow::addProyectilSimple);
+    this->showMaximized();
+
+    connect(boton,&QPushButton::clicked,this,&MainWindow::addProyectilSimple);
 }
 
 MainWindow::~MainWindow()
@@ -23,19 +24,20 @@ void MainWindow::setDeskProperty()
 {
     ///ASIGNACION DE VALORES
    desk_widht = deskWidget->width();   desk_height = deskWidget->height();
-   view->setGeometry(0,0,desk_widht,deskWidget->height());
-   scene->setWindowProperty(desk_widht,deskWidget->height());
+   view->setGeometry(0,0,desk_widht,desk_height);
+   scene->setWindowProperty(desk_widht,desk_height);
 }
 
 void MainWindow::crearObjetos()
 {
     scene = new Escena_Guerra;
-    view = new QGraphicsView(scene,this);
+    view = new QGraphicsView(this);
     deskWidget = new QDesktopWidget;
     setDeskProperty();
+    view->setScene(scene);
     boton = new QPushButton("AÑADIR MISIL");
-    //boton->setGeometry(400,100,100,100);
-    //scene->addWidget(boton);
+    boton->setGeometry(400,100,100,100);
+    scene->addWidget(boton);
 
 }
 
