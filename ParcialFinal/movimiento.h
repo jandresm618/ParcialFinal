@@ -7,6 +7,7 @@
 
 #define G 9.81
 #define pi 3.141617
+#define DT 0.01
 
 using namespace std;
 
@@ -15,15 +16,22 @@ class Movimiento
 public:
     Movimiento();
     Movimiento(float x,float y,bool _lado);
+
     void actualizar(float dt);
+    void actualizar();
+
     bool nParabolicos(float xf,float yf, float d, float factorImpacto);
     bool parabolico(float xf,float yf,int _v0,int _angle,float d, float factorImpacto);
     vector<float> parabolico(float timeStop,float x, float y,int _v0,int _angle);
+
+    void calcularMovimientoEnemigo(int _xE,int _yE,int _v0,int _angle, int t_);
 
     float tiempoParabolico(float xf,float yf,float _angle,float _v0,float d, float factorImpacto);
     void setParametros(int cont);
     map<int,vector<float>> getParametros();
     void imprimirValoresImpacto();
+
+    void setLanzamiento(int _v0,int _angle);
 
 private:
     bool lado; //Indicador de bando

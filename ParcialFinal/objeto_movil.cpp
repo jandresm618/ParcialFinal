@@ -5,15 +5,15 @@ Objeto_Movil::Objeto_Movil()
 
 }
 
-Objeto_Movil::Objeto_Movil(QString _ruta, int _x, int _y,int _xf,int _yf, int _w, int _h,int _move) : Objeto_Grafico(_ruta,_x,_y,_w,_h)
+Objeto_Movil::Objeto_Movil(QString _ruta, int _x, int _y, int _xE, int _yE, int _w, int _h, bool _lado)
+    : Objeto_Grafico(_ruta,_x,_y,_w,_h)
 {
     ///DECLARACION DE OBJETOS
-    movimiento = new Movimiento(_x,_y,_xf,_yf);
+    movimiento = new Movimiento(_x,_y,_lado);
     time_move = new QTimer;
-    move = _move;
 
     ///CONEXION DE SIGNAL & SLOT
-    switch (_move) {
+    switch (_lado) {
     case 1:
             ///Movimiento Parabolico
         connect(time_move,&QTimer::timeout,this,&Objeto_Movil::updatePos);
@@ -123,8 +123,8 @@ void Objeto_Movil::stopMove()
 
 void Objeto_Movil::updatePos()
 {
-    ///SI SE CUMPLE LA CONDICION
-    if (movimiento->actualizar(0.1)) {outOfScene = true; /*delete this;*/}       //EMITE SEÑAL
+    ///ACTUALIZA VALORES DE MOVIMIENTO
+    movimiento->actualizar();
     ///ASIGNACION DE VALORES
     this->set_Pos(movimiento->getX(),movimiento->getY());
 }

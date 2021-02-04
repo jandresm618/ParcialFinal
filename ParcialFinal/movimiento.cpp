@@ -20,7 +20,19 @@ void Movimiento::actualizar(float dt)
 
     x = x + vx*dt; //Posicion x
     y = y + vy*dt-(0.5*ay*dt*dt); //Posicion y
-    //cout<<x<<" "<<y<<endl;
+}
+
+void Movimiento::actualizar()
+{
+    ax = 0;  //Aceleracion en Componente x
+    ay = -G; //Aceleracion en Componente y
+
+    //vx = vx;    //Velocidad en Componente x
+    vy = vy - ay*DT;  //Velocidad en Componente y
+
+    x = x + vx*DT; //Posicion x
+    y = y + vy*DT-(0.5*ay*DT*DT); //Posicion y
+
 }
 
 bool Movimiento::nParabolicos(float xf, float yf, float d, float factorImpacto)
@@ -117,4 +129,11 @@ void Movimiento::imprimirValoresImpacto()
     cout<<"Velocidad: "<<v0<<" m/sg\n";
     cout<<"Posicion Final ("<<x<<","<<y<<")\n";
     cout<<"--------------------------"<<endl;
+}
+
+void Movimiento::setLanzamiento(int _v0, int _angle)
+{
+    v0 = _v0;
+    angulo = _angle;
+    actualizar(DT);
 }

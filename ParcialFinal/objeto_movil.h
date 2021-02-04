@@ -11,7 +11,7 @@ class Objeto_Movil:public QObject, public Objeto_Grafico
     Q_OBJECT
 public:
     Objeto_Movil();
-    Objeto_Movil(QString _ruta, int _x, int _y, int _xf, int _yf, int _w, int _h, int _move);
+    Objeto_Movil(QString _ruta, int _x, int _y, int _xE, int _yE, int _w, int _h, bool _lado);
     Objeto_Movil(QString _ruta, int _x, int _y, int _w, int _h);
     ~Objeto_Movil();
 
