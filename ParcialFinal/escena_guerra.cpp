@@ -52,9 +52,11 @@ void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int xf, int yf, f
 {
     ///DECLARACION DE VARIABLES AUXILIARES LOCALES
     float factorImpacto = radio/(abs(x-xf));
+    float dif = y-yf;
 
     ///CREACION DE OBJETO MOVIL
-    proyectil = new Objeto_Movil(ruta,x,y,xf,radio);
+    if(x-xf < 0 ) proyectil = new Objeto_Movil(ruta,x,y,xf,radio);
+    else proyectil = new Objeto_Movil(ruta,x,y-dif,xf,radio);
     objetosMoviles.push_back(proyectil);     //Añadir objeto a la lista de objetos moviles
 
     if(caso == 1 || caso == 2 || caso == 3){
@@ -62,7 +64,7 @@ void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int xf, int yf, f
     }
 
     /// ASIGNACION DE MOVIMIENTO PARABOLICO
-    proyectil->getMovParabolico(caso);
+    proyectil->getMovParabolico(caso-1);
 
     /// INICIALIZACION DE OBJETO EN ESCENA
     this->addItem(proyectil);                //Se añade el objeto a la escena

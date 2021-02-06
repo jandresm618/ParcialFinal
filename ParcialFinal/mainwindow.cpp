@@ -94,11 +94,13 @@ void MainWindow::generarDisparos1()
 
 void MainWindow::generarDisparos2()
 {
+    qDebug()<<"Por aqui normal";
     QString _ruta = ":/imagenes/Imagenes/bola_artilleria.png";
     if(cont2 == 5) scene->disparoDefensivo(1);
-    if(cont2 == 15) scene->disparoDefensivo(2);
-    if(cont2 == 25) {scene->disparoDefensivo(3);cont2 =0;time2->stop();}
+    if(cont2 == 15) scene->disparoDefensivo(1);
+    if(cont2 == 25) {scene->disparoDefensivo(1);cont2 =0;time2->stop();}
     cont2++;
+    qDebug()<<"Por aqui tambien";
 }
 
 void MainWindow::generarDisparos3()
@@ -106,8 +108,8 @@ void MainWindow::generarDisparos3()
     QString _ruta = ":/imagenes/Imagenes/bola_artilleria.png";
     if(cont3 == 1) scene->disparoOfensivo(1);
     if(cont3 == 2) scene->disparoDefensivo(1);
-    if(cont3 == 12) scene->disparoDefensivo(2);
-    if(cont3 == 24) {scene->disparoDefensivo(3);cont3 =0;time3->stop();}
+    if(cont3 == 12) scene->disparoDefensivo(1);
+    if(cont3 == 24) {scene->disparoDefensivo(1);cont3 =0;time3->stop();}
     cont3++;
 }
 
@@ -116,8 +118,8 @@ void MainWindow::generarDisparos4()
     QString _ruta = ":/imagenes/Imagenes/bola_artilleria.png";
     if(cont4 == 1) scene->disparoOfensivo(1);
     if(cont4 == 2) scene->disparoDefensivo(1);
-    if(cont4 == 12) scene->disparoDefensivo(2);
-    if(cont4 == 24) {scene->disparoDefensivo(3);cont4 =0;time4->stop();}
+    if(cont4 == 12) scene->disparoDefensivo(1);
+    if(cont4 == 24) {scene->disparoDefensivo(1);cont4 =0;time4->stop();}
     cont4++;
 }
 
