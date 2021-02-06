@@ -11,7 +11,7 @@ class Objeto_Movil:public QObject, public Objeto_Grafico
     Q_OBJECT
 public:
     Objeto_Movil();
-    Objeto_Movil(QString _ruta, int _x, int _y, int _xE, int _yE, int _w, int _h, bool _lado);
+    Objeto_Movil(QString _ruta, int _x, int _y, int _xE, float _radio);
     Objeto_Movil(QString _ruta, int _x, int _y, int _w, int _h);
     ~Objeto_Movil();
 
@@ -21,8 +21,11 @@ public:
     bool closeness(Objeto_Movil *obj,int howFar);
 
     void setMovParabolico(int xf,int yf,int param,bool minMax);
+    void getMovParabolico(int pos);
     void setVel(float _v0,float _angle);
-    void setMovSenoidal();
+
+    void calcularParametrosImpactoEstatico(int _xE, int _yE,float factorImpacto);
+    void calcularParametrosImpactoDinamico(vector<float> paramsE, float tMensaje, float tFinal);
 
 
     void startMove(int msec);
@@ -38,6 +41,7 @@ public:
     void deleteObject();
 
     bool getLado();
+    void setLado(bool value);
 
     int getV0() const;
 
@@ -57,6 +61,7 @@ private:
     int move = 0;
     int cont = 1;
     int t_move = 60;
+    float radio = 0;
 
 signals:
     void outScene();

@@ -33,6 +33,7 @@ private:
     int w,h;
     QString ruta;
     QPixmap *image;
+    float escala = 1;
 };
 
 #endif // OBJETO_GRAFICO_H

@@ -17,7 +17,7 @@ Objeto_Grafico::Objeto_Grafico(QString _ruta, int _x, int _y, int _w, int _h)
 QRectF Objeto_Grafico::boundingRect() const
 {
     ///RETORNO DE OBJETO
-    return QRectF(0,0,w,h);
+    return QRectF(-(w*escala)/2,-(h*escala)/2,w*escala,h*escala);
     //return QRectF(x,y,w,h);
 }
 

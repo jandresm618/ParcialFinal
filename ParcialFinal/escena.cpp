@@ -1,45 +1,37 @@
-#include "escena_guerra.h"
+#include "escena.h"
 
 ///         CONSTRUCTOR         ///
-Escena_Guerra::Escena_Guerra()
+Escena::Escena()
 {
     //image = new QPixmap(":/personajes/imagenes/Fondo_Original1.png");
-    image = new QPixmap(":/personajes/imagenes/fondo.png");
-    añadirObjetosEscena();
-
+    //image = new QPixmap(":/personajes/imagenes/fondo.png");
 }
+
 ///         DESTRUCTOR         ///
-Escena_Guerra::~Escena_Guerra()
+Escena::~Escena()
 {
     ///ELIMINACION DE MEMORIA
     delete proyectil;
     delete canon;
 }
+
+
 ///         PROPIEDADES DE VENTANA         ///
-void Escena_Guerra::setWindowProperty(int desk_w, int desk_h)
+void Escena::setWindowProperty(int desk_w, int desk_h)
 {
     limit_x = desk_w;
     limit_y = desk_h;
     setSceneRect(0,0,desk_w,desk_h);
 }
 
-void Escena_Guerra::añadirObjetosEscena()
+void Escena::drawBackground(QPainter *painter, const QRectF &exposed)
 {
-    int dif = y_canon1 - y_canon2;
-    addObjetoGrafico(canon1_ruta,x_canon1,y_canon1,radio_ofensivo/2,radio_ofensivo/2);
-    addObjetoGrafico(circulo_ruta,x_canon1,y_canon1,radio_ofensivo,radio_ofensivo);
-    addObjetoGrafico(canon2_ruta,x_canon2,y_canon2+dif,radio_defensivo/2,radio_defensivo/2);
-    addObjetoGrafico(circulo_ruta,x_canon2,y_canon2+dif,radio_defensivo,radio_defensivo);
-}
-
-void Escena_Guerra::drawBackground(QPainter *painter, const QRectF &exposed)
-{
-
     painter->drawPixmap(QRectF(0,0,limit_x,limit_y),*image,image->rect());
 }
 
+
 ///         AÑADIR OBJETOS GRAFICOS         ///
-void Escena_Guerra::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
+void Escena::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
 {
     ///DECLARACION DE OBJETO
     canon = new Objeto_Grafico(ruta,x,y,w,h);
@@ -48,28 +40,31 @@ void Escena_Guerra::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
     objetosGraficos.push_back(canon);
 }
 
-void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int xf, int yf, float radio,int caso)
+///         AÑADIR OBJETOS GRAFICOS MOVILES         ///
+void Escena::addObjetoMovil(QString ruta, int x, int y,int xf,int yf, int w, int h, int move)
 {
     ///DECLARACION DE VARIABLES AUXILIARES LOCALES
-    float factorImpacto = radio/(abs(x-xf));
+    int param = 5;              //Parametro Altura Maxima
+    bool minMax = true;         //Minimo Valor del Parametro
 
     ///CREACION DE OBJETO MOVIL
-    proyectil = new Objeto_Movil(ruta,x,y,xf,radio);
+    proyectil = new Objeto_Movil(ruta,x,y,xf,yf,w,h,move);
     objetosMoviles.push_back(proyectil);     //Añadir objeto a la lista de objetos moviles
 
-    if(caso == 1 || caso == 2 || caso == 3){
-        proyectil->calcularParametrosImpactoEstatico(xf,yf,factorImpacto);
-    }
-
     /// ASIGNACION DE MOVIMIENTO PARABOLICO
-    proyectil->getMovParabolico(caso);
+    if(move == 1) proyectil->setMovParabolico(xf,yf,param,minMax);   //Calcula velocidad y angulo inicial
+
+    //qDebug()<<"No hay problemas con la inicializacion del movimiento";
+
+    //ASIGNACION DE MOVIMIENTO SENOIDAL
+    //muni->setMovSenoidal();
 
     /// INICIALIZACION DE OBJETO EN ESCENA
     this->addItem(proyectil);                //Se añade el objeto a la escena
     proyectil->startMove(time_move);                //Asigna valor de timeout para el movimiento
 }
 
-void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int v0, int angle, bool lado)
+void Escena::addObjetoMovil(QString ruta, int x, int y, int v0, int angle, bool lado)
 {
     ///CREACION DE OBJETO MOVIL
     proyectil = new Objeto_Movil(ruta,x,y,100,100);
@@ -80,22 +75,13 @@ void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int v0, int angle
     this->addItem(proyectil);                //Se añade el objeto a la escena
 }
 
-void Escena_Guerra::explodeObject(int _x, int _y, int _w, int _h)
+void Escena::explodeObject(int _x, int _y, int _w, int _h)
 {
     proyectil = new Objeto_Movil(":/personajes/imagenes/explode.png",_x,_y,_w,_h);
 }
 
-void Escena_Guerra::disparoDefensivo(int caso)
-{
-    addObjetoMovil(proyectil1_ruta,x_canon2,y_canon2,x_canon1,y_canon1,radio_defensivo/2,caso);
-}
 
-void Escena_Guerra::disparoOfensivo(int caso)
-{
-    addObjetoMovil(proyectil1_ruta,x_canon1,y_canon1,x_canon2,y_canon2,radio_ofensivo/2,caso);
-}
-
-void Escena_Guerra::pause()
+void Escena::pause()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -104,7 +90,7 @@ void Escena_Guerra::pause()
     }
 }
 
-void Escena_Guerra::start()
+void Escena::start()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -113,7 +99,7 @@ void Escena_Guerra::start()
     }
 }
 
-void Escena_Guerra::restart()
+void Escena::restart()
 {
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++){
@@ -123,7 +109,10 @@ void Escena_Guerra::restart()
     }
 }
 
-bool Escena_Guerra::deleteFromScene()
+
+
+///         ELIMINA LOS OBJETOS QUE ESTEN FUERA DE ESCENA´         ///
+bool Escena::deleteFromScene()
 {
     //cont_1++;
     bool collides = false;
@@ -165,14 +154,5 @@ bool Escena_Guerra::deleteFromScene()
         }
     }
     return collides;
-}
 
-float Escena_Guerra::getRadio_ofensivo() const
-{
-    return radio_ofensivo;
-}
-
-float Escena_Guerra::getRadio_defensivo() const
-{
-    return radio_defensivo;
 }

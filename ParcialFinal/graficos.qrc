@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/imagenes">
         <file>Imagenes/Bomba.png</file>
+        <file>Imagenes/canon1.png</file>
+        <file>Imagenes/fondo.png</file>
+        <file>Imagenes/canon2.png</file>
+        <file>Imagenes/bola_artilleria.png</file>
+        <file>Imagenes/circulo_impacto.png</file>
     </qresource>
 </RCC>
