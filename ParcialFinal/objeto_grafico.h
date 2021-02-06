@@ -35,7 +35,7 @@ private:
     int w,h;
     QString ruta;
     QPixmap *image;
-    float escala = 1;
+    float escala = 2;
     int id = 0;
 };
 
