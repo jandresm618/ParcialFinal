@@ -26,10 +26,10 @@ void Escena_Guerra::setWindowProperty(int desk_w, int desk_h)
 void Escena_Guerra::añadirObjetosEscena()
 {
     int dif = y_canon1 - y_canon2;
-    addObjetoGrafico(canon1_ruta,x_canon1,y_canon1,radio_ofensivo/2,radio_ofensivo/2);
-    addObjetoGrafico(circulo_ruta,x_canon1,y_canon1,radio_ofensivo,radio_ofensivo);
-    addObjetoGrafico(canon2_ruta,x_canon2,y_canon2+dif,radio_defensivo/2,radio_defensivo/2);
-    addObjetoGrafico(circulo_ruta,x_canon2,y_canon2+dif,radio_defensivo,radio_defensivo);
+    addObjetoGrafico(canon1_ruta,x_canon1,y_canon1,radio_ofensivo/2,radio_ofensivo/2,true);
+    addObjetoGrafico(circulo_ruta,x_canon1,y_canon1,radio_ofensivo,radio_ofensivo,true);
+    addObjetoGrafico(canon2_ruta,x_canon2,y_canon2+dif,radio_defensivo/2,radio_defensivo/2,true);
+    addObjetoGrafico(circulo_ruta,x_canon2,y_canon2+dif,radio_defensivo,radio_defensivo,true);
 }
 
 void Escena_Guerra::drawBackground(QPainter *painter, const QRectF &exposed)
@@ -39,13 +39,14 @@ void Escena_Guerra::drawBackground(QPainter *painter, const QRectF &exposed)
 }
 
 ///         AÑADIR OBJETOS GRAFICOS         ///
-void Escena_Guerra::addObjetoGrafico(QString ruta, int x, int y, int w, int h)
+void Escena_Guerra::addObjetoGrafico(QString ruta, int x, int y, int w, int h, bool estatico)
 {
     ///DECLARACION DE OBJETO
     canon = new Objeto_Grafico(ruta,x,y,w,h);
     ///ASIGNACION DE VALORES
     this->addItem(canon);
-    objetosGraficos.push_back(canon);
+    if(!estatico) objetosGraficos.push_back(canon);
+
 }
 
 void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int xf, int yf, float radio,int caso)
@@ -57,6 +58,7 @@ void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int xf, int yf, f
     ///CREACION DE OBJETO MOVIL
     if(x-xf < 0 ) proyectil = new Objeto_Movil(ruta,x,y,xf,radio);
     else proyectil = new Objeto_Movil(ruta,x,y-dif,xf,radio);
+    proyectil->setCaso(caso);
     objetosMoviles.push_back(proyectil);     //Añadir objeto a la lista de objetos moviles
 
     if(caso == 1 || caso == 2 || caso == 3){
@@ -80,6 +82,12 @@ void Escena_Guerra::addObjetoMovil(QString ruta, int x, int y, int v0, int angle
 
     /// INICIALIZACION DE OBJETO EN ESCENA
     this->addItem(proyectil);                //Se añade el objeto a la escena
+}
+
+void Escena_Guerra::addCirculo(Objeto_Movil *obj)
+{
+
+    addObjetoGrafico(circulo_ruta,obj->getX(),obj->getY(),obj->getRadio(),obj->getRadio(),false);
 }
 
 void Escena_Guerra::explodeObject(int _x, int _y, int _w, int _h)
@@ -133,40 +141,28 @@ bool Escena_Guerra::deleteFromScene()
     if(!objetosMoviles.empty()){
         for(itObjMov = objetosMoviles.begin();itObjMov != objetosMoviles.end();itObjMov++,cont++){
             if((*itObjMov)->getOutOfScene()){
+                (*itObjMov)->deleteObject();
+                objetosMoviles.erase(itObjMov);
                 collides = true;
-                if(!(*itObjMov)->getLado()){
-                    ///SE REDUCE LA VIDA DEL JUGADOR
-                    //this->setHurt();
-                }
-                if((*itObjMov) == objetosMoviles.at(cont)){
-                    (*itObjMov)->deleteObject();
-                    objetosMoviles.erase(itObjMov);
-                }
                 return collides;
             }
-            else{
-                for (itObjMov2 = objetosMoviles.begin(),cont2=0;itObjMov2 != objetosMoviles.end();itObjMov2++,cont2++) {
-                    /// Si es bala ///              ///Si es Enemigo///
-                    if((*itObjMov)->getLado() && !(*itObjMov2)->getLado()){
-                        if((*itObjMov)->collidesWithItem((*itObjMov2))
-                                && ((*itObjMov2)->collidesWithItem((*itObjMov)))
-                                /*|| (*itObjMov)->closeness((*itObjMov2),10)*/){
-                            collides = true; //setScorePlus();
-                            //this->explodeObject((*itObjMov)->getX(),(*itObjMov)->getY(),100,100);
-                            (*itObjMov)->deleteObject();
-                            objetosMoviles.erase(itObjMov);
-                            (*itObjMov2)->deleteObject();
-                            objetosMoviles.erase(itObjMov2);
-
-
-                            return collides;
-                        }
-                    }
+            else if((*itObjMov)->able()){
+                    addCirculo((*itObjMov));
                 }
-            }
+
         }
     }
     return collides;
+}
+
+void Escena_Guerra::cleanScene()
+{
+    if(!objetosGraficos.empty()){
+        for(it = objetosGraficos.begin();it!= objetosGraficos.end();it++){
+            delete (*it);
+        }
+        objetosGraficos.clear();
+    }
 }
 
 float Escena_Guerra::getRadio_ofensivo() const

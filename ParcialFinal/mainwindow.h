@@ -25,6 +25,7 @@ public:
 
     void crearObjetos();
 
+    void checkScene();
     void addProyectilSimple();
     void generarDisparos1();
     void generarDisparos2();
@@ -51,7 +52,7 @@ private:
     QPushButton *boton4;
     QPushButton *boton5;
 
-
+    QTimer *timeCheck;
     QTimer *time1;
     QTimer *time2;
     QTimer *time3;

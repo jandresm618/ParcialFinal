@@ -28,12 +28,15 @@ public:
 
     int getH() const;
 
+    void setId(int value);
+
 private:
     int x,y;
     int w,h;
     QString ruta;
     QPixmap *image;
     float escala = 1;
+    int id = 0;
 };
 
 #endif // OBJETO_GRAFICO_H

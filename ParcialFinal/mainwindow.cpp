@@ -18,13 +18,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(boton4,&QPushButton::clicked,this,&MainWindow::caso4);
     connect(boton5,&QPushButton::clicked,this,&MainWindow::caso5);
 
+    connect(timeCheck,&QTimer::timeout,this,&MainWindow::checkScene);
     connect(time1,&QTimer::timeout,this,&MainWindow::generarDisparos1);
     connect(time2,&QTimer::timeout,this,&MainWindow::generarDisparos2);
     connect(time3,&QTimer::timeout,this,&MainWindow::generarDisparos3);
     connect(time4,&QTimer::timeout,this,&MainWindow::generarDisparos4);
     connect(time5,&QTimer::timeout,this,&MainWindow::generarDisparos5);
 
-
+    timeCheck->start(50);
 }
 
 MainWindow::~MainWindow()
@@ -67,11 +68,17 @@ void MainWindow::crearObjetos()
     boton5->setGeometry(1000,100,100,100);
     scene->addWidget(boton5);
 
+    timeCheck = new QTimer;
     time1 = new QTimer;
     time2 = new QTimer;
     time3 = new QTimer;
     time4 = new QTimer;
     time5 = new QTimer;
+}
+
+void MainWindow::checkScene()
+{
+    scene->deleteFromScene();
 }
 
 
@@ -136,6 +143,7 @@ void MainWindow::generarDisparos5()
 
 void MainWindow::caso1()
 {
+    scene->cleanScene();
     time1->start(m_sec);
     /// PREPARAR LOS ELEMENTOS EN ESCENA
         /// 3 DISPAROS OFENSIVOS
@@ -143,6 +151,7 @@ void MainWindow::caso1()
 
 void MainWindow::caso2()
 {
+    scene->cleanScene();
     time2->start(m_sec);
     /// PREPARAR LOS ELEMENTOS EN ESCENA
         /// 3 DISPAROS DEFENSIVOS
@@ -150,6 +159,7 @@ void MainWindow::caso2()
 
 void MainWindow::caso3()
 {
+    scene->cleanScene();
     time3->start(m_sec);
     /// PREPARAR LOS ELEMENTOS EN ESCENA
         /// 1 DISPAROS OFENSIVO Y 3 DEFENSIVOS SIN RESTRICCION
@@ -157,6 +167,7 @@ void MainWindow::caso3()
 
 void MainWindow::caso4()
 {
+    scene->cleanScene();
     time4->start(m_sec);
     /// PREPARAR LOS ELEMENTOS EN ESCENA
         /// 1 DISPAROS OFENSIVO Y 3 DEFENSIVOS CON RESTRICCION
@@ -164,6 +175,7 @@ void MainWindow::caso4()
 
 void MainWindow::caso5()
 {
+    scene->cleanScene();
     time5->start(m_sec);
     /// PREPARAR LOS ELEMENTOS EN ESCENA
         /// 1 DISPAROS OFENSIVO Y 1 DEFENSIVOS SIN RESTRICCION

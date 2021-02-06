@@ -24,6 +24,9 @@ public:
     void getMovParabolico(int pos);
     void setVel(float _v0,float _angle);
 
+    bool outScene();
+    bool able();
+
     void calcularParametrosImpactoEstatico(int _xE, int _yE,float factorImpacto);
     void calcularParametrosImpactoDinamico(vector<float> paramsE, float tMensaje, float tFinal);
 
@@ -49,6 +52,12 @@ public:
 
     int getMove() const;
 
+    float getRadio() const;
+
+    void setCaso(int value);
+
+    int getCaso() const;
+
 private:
     Movimiento *movimiento;
 
@@ -58,13 +67,13 @@ private:
     int v0 = 0, angle = 0; //Variables de Movimiento
     float factorImpacto = 0.05; //Porcentaje de Error en el impacto
     bool outOfScene = false;
+    bool draw = true;
     int move = 0;
-    int cont = 1;
+    int cont = 0;
     int t_move = 60;
     float radio = 0;
+    int caso = 0;
 
-signals:
-    void outScene();
 };
 
 #endif // OBJETO_MOVIL_H

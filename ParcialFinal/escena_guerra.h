@@ -19,9 +19,10 @@ public:
     void añadirObjetosEscena();
 
         /// FUNCIONES AÑADIR OBJETOS GRAFICOS
-    void addObjetoGrafico(QString ruta,int x,int y,int w,int h);
+    void addObjetoGrafico(QString ruta,int x,int y,int w,int h,bool estatico);
     void addObjetoMovil(QString ruta, int x, int y, int xf, int yf, float radio, int caso);
     void addObjetoMovil(QString ruta, int x, int y, int v0, int angle, bool lado);
+    void addCirculo(Objeto_Movil *obj);
     void explodeObject(int _x,int _y,int _w,int _h);
 
     void disparoOfensivo(int caso);
@@ -41,6 +42,7 @@ public:
 
         /// CONTROL DE COLISIONES Y PUESTAS EN ESCENA
     bool deleteFromScene();
+    void cleanScene();
 
     float getRadio_ofensivo() const;
     float getRadio_defensivo() const;
@@ -48,10 +50,12 @@ public:
 private:
     /// APUNTADOR A OBJETOS GRAFICOS
     Objeto_Grafico *canon;
+    Objeto_Grafico *bala;
     Objeto_Movil *proyectil;
 
         /// CONTENEDORES DE OBJETOS
     vector<Objeto_Grafico *> objetosGraficos;
+    vector<Objeto_Grafico *>::iterator it;
     vector<Objeto_Movil *> objetosMoviles;
     vector<Objeto_Movil *>::iterator itObjMov;
     vector<Objeto_Movil *>::iterator itObjMov2;

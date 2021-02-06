@@ -76,5 +76,10 @@ int Objeto_Grafico::getH() const
     return h;
 }
 
+void Objeto_Grafico::setId(int value)
+{
+    id = value;
+}
+
 
 

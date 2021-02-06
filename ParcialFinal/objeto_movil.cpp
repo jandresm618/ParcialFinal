@@ -90,6 +90,21 @@ void Objeto_Movil::setVel(float _v0, float _angle)
     movimiento->setLanzamiento(_v0,_angle);
 }
 
+bool Objeto_Movil::outScene()
+{
+    if(movimiento->getX()>1400 || movimiento->getX()<-radio
+       || movimiento->getY() > 1000 ||  movimiento->getY() < -radio){
+        return true;
+    }
+    else return false;
+}
+
+bool Objeto_Movil::able()
+{
+    if(cont % 10 == 0) return true;
+    else return false;
+}
+
 void Objeto_Movil::calcularParametrosImpactoEstatico(int _xE, int _yE, float factorImpacto)
 {
     movimiento->nParabolicosEstatico(_xE,_yE,abs(movimiento->getX()-_xE),factorImpacto);
@@ -116,6 +131,7 @@ void Objeto_Movil::stopMove()
 
 void Objeto_Movil::updatePos()
 {
+    cont++;
     ///ACTUALIZA VALORES DE MOVIMIENTO
     movimiento->actualizar2();
     ///ASIGNACION DE VALORES
@@ -193,5 +209,20 @@ int Objeto_Movil::getAngle() const
 int Objeto_Movil::getMove() const
 {
     return move;
+}
+
+float Objeto_Movil::getRadio() const
+{
+    return radio;
+}
+
+void Objeto_Movil::setCaso(int value)
+{
+    caso = value;
+}
+
+int Objeto_Movil::getCaso() const
+{
+    return caso;
 }
 
